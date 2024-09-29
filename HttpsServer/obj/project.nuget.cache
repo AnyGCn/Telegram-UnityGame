@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "VSF9rHRAWlumzAfI2U0eND0dmCtAiDGzmlpRj0vtCYYKhbhYDJ6E+GksuUJo0c5gEdQTYW1rA2Tj+YJOn6aJPQ==",
+  "success": true,
+  "projectFilePath": "D:\\Web3\\Telegram-UnityGame\\HttpsServer\\HttpsServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GGBoy\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.6.1\\microsoft.identitymodel.abstractions.7.6.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.6.1\\microsoft.identitymodel.jsonwebtokens.7.6.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\microsoft.identitymodel.logging\\7.6.1\\microsoft.identitymodel.logging.7.6.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.6.1\\microsoft.identitymodel.tokens.7.6.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.6.1\\system.identitymodel.tokens.jwt.7.6.1.nupkg.sha512",
+    "C:\\Users\\GGBoy\\.nuget\\packages\\telegram.bot\\20.0.0-alpha.1\\telegram.bot.20.0.0-alpha.1.nupkg.sha512"
+  ],
+  "logs": []
+}

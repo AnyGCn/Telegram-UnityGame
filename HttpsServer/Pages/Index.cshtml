@@ -1,0 +1,173 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src="UnityGame/telegram-web-app.js"></script>
+@if (!Model.isLoginSuccess)
+{
+  <body></body>
+  <script>
+    console.error('Error:', 'run');
+    window.addEventListener('load', function() {
+      console.error('Error:', 'load done');
+      if (window.Telegram.WebApp.initData === undefined || window.Telegram.WebApp.initData === null) {
+        console.error('Error:', 'load done and execute');
+        // 创建新的 div 元素
+        var div = document.createElement('div');
+        div.className = 'text-center';
+
+        // 设置 div 的内容
+        div.innerHTML = '<h1 class="display-4">登录失败, 重新回到Telegram进行登录</h1>';
+
+        // 把 div 添加到页面
+        document.body.appendChild(div);
+        return;
+      }
+
+      // 获取 token
+      var token = window.Telegram.WebApp.initData;
+      
+      // 保存原始的 fetch 函数
+      var originalFetch = window.fetch;
+
+      // 创建新的 fetch 函数
+      window.fetch = function(input, init) {
+        // 如果 init 未定义，创建一个新的对象
+        if (init === undefined) {
+          init = {};
+        }
+
+        // 如果 headers 未定义，创建一个新的对象
+        if (init.headers === undefined) {
+          init.headers = {};
+        }
+
+        // 添加授权头
+        init.headers['Authorization'] = 'Bearer ' + token;
+
+        // 调用原始的 fetch 函数
+        return originalFetch(input, init);
+      };
+      
+      // 使用 fetch API 发送 GET 请求
+      fetch('/Index')
+        .then(function(response) {
+          if (!response.ok) {
+            throw new Error('HTTP error, status = ' + response.status);
+          }
+          return response.text();
+        })
+        .then(function(text) {
+          document.body.innerHTML = text; // 使用返回的 HTML 替换当前页面
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
+      });
+  </script>
+}
+else
+{
+  // Copy From wwwroot/UnityGame/Index.html here, there are no good way to include the html file in razor page
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebGL</title>
+    <link rel="shortcut icon" href="UnityGame/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="UnityGame/TemplateData/style.css">
+    <link rel="manifest" href="UnityGame/manifest.webmanifest">
+  </head>
+
+  <div id="unity-container">
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-warning"> </div>
+  </div>
+  <script>
+    window.addEventListener("load", function () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("ServiceWorker.js");
+      }
+    });
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var warningBanner = document.querySelector("#unity-warning");
+
+    // Shows a temporary message banner/ribbon for a few seconds, or
+    // a permanent error message on top of the canvas if type=='error'.
+    // If type=='warning', a yellow highlight color is used.
+    // Modify or remove this function to customize the visually presented
+    // way that non-critical warnings and error messages are presented to the
+    // user.
+    function unityShowBanner(msg, type) {
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+      }
+      var div = document.createElement('div');
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+      if (type == 'error') div.style = 'background: red; padding: 10px;';
+      else {
+        if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+        setTimeout(function() {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
+
+    var buildUrl = "UnityGame/Build";
+    var loaderUrl = buildUrl + "/UnityGame.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/UnityGame.data.gz",
+      frameworkUrl: buildUrl + "/UnityGame.framework.js.gz",
+      codeUrl: buildUrl + "/UnityGame.wasm.gz",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "WebGL",
+      productVersion: "1.0",
+      showBanner: unityShowBanner,
+    };
+
+    // By default Unity keeps WebGL canvas render target size matched with
+    // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+    // Set this to false if you want to decouple this synchronization from
+    // happening inside the engine, and you would instead like to size up
+    // the canvas DOM size and WebGL render target sizes yourself.
+    // config.matchWebGLToCanvasSize = false;
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      // Mobile device style: fill the whole browser client area with the game canvas:
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+    }
+
+    loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+}

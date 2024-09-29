@@ -1,0 +1,45 @@
+{
+  "ApiToken": "Your Telegram Bot Api Token",
+  "BotCommands": [
+    {
+      "Command": "/start",
+      "Description": "Start the bot"
+    },
+    {
+      "Command": "/help",
+      "Description": "Get help"
+    },
+    {
+      "Command": "/buy",
+      "Description": "buy test"
+    },
+    {
+      "Command": "/buylink",
+      "Description": "buy test"
+    }
+  ],
+  "StartReplyText": "\uD83D\uDD79\uFE0FJust click, click, and click again! You'll discover your very own Yourg NFT! \uD83C\uDF81\uD83C\uDF81",
+  "StartReplyImage": "https://www.Your.fun/img/logo.png",
+  "InviteUrl": "https://t.me/Your_Bot/YourgGenerator?startapp=",
+  "InviteText": "\uD83D\uDC97Your - cutting-edge gaming platform on TON! \uD83C\uDFAE Earn super rare Yourg NFT, explore diverse games & experience decentralized gaming's future!",
+  "StartMarkup": {
+    "inline_keyboard": [
+      [
+        {
+          "Text": "Play Yourg \uD83D\uDD79",
+          "web_app": { "Url":  "https://192.168.31.100/" }
+        }
+      ],
+      [
+        {
+          "Text": "Channel",
+          "Url": "https://t.me/Yourfun"
+        },
+        {
+          "Text": "Group",
+          "Url": "https://t.me/Yourglobal"
+        }
+      ]
+    ]
+  }
+}
